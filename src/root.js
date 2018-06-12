@@ -1,13 +1,20 @@
 import React from 'react';
-import { createStore } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
+import promise from 'redux-promise';
 import rootReducer from 'reducers/index';
 
 //const initialState = {};
+//const createStoreWithMiddleware = applyMiddleware(promise)(createStore);
 
-export default ({children, initialState = {}}) => {
+
+export default ({ children, initialState = {} }) => {
+
+    const store = createStore(rootReducer, initialState, applyMiddleware(promise));
+
     return (
-        <Provider store={createStore(rootReducer, initialState)}>
+        // <Provider store={createStoreWithMiddleware(rootReducer, initialState)}> 
+        <Provider store={store}>
             {children}
         </Provider>
     );
